@@ -15,7 +15,7 @@ glob(resolve(buildRoot, 'stylesheets/*.css'), {}, (err, files) => {
       stylesheetPath: resolve(buildRoot, 'stylesheets'),
       spritePath: resolve(buildRoot, 'images'),
       retina: true,
-      verbose: true,
+      verbose: false,
       hooks: {
         onSaveSpritesheet: (opts, spritesheet) => {
           const sourceImages = Object.keys(spritesheet.coordinates)

@@ -8,7 +8,7 @@ module.exports = {
   entry: [
     `webpack-dev-server/client?http://${ config.devServer.host }:${ config.devServer.port }`,
     'webpack/hot/only-dev-server',
-    resolve(__dirname, '../src/main.js')
+    resolve(__dirname, '..', + config.srcRoot + 'main.js')
   ],
   output: {
     filename: '[name].js'
@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve(__dirname, '../src')
+      '@': resolve(__dirname, '..', config.srcRoot)
     },
     extensions: ['.js', '.vue', '.json']
   },
@@ -27,7 +27,7 @@ module.exports = {
     inline: true,
     compress: true,
     historyApiFallback: true,
-    contentBase: resolve(__dirname, '../src')
+    contentBase: resolve(__dirname, '..', config.srcRoot)
   },
   performance: false,
   mode: 'development',
@@ -59,14 +59,28 @@ module.exports = {
       },
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [ 'babel-loader' ]
       },
       {
         test: /\.styl(us)?$/,
         use: [
           'vue-style-loader',
-          'css-loader',
-          'postcss-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+              modules: true,
+              localIdentName: '[local]-[hash:base64:8]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: [ autoprefixer ]
+            }
+          },
           'stylus-loader'
         ],
       },
@@ -100,7 +114,7 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, '../src/templates/index.pug')
+      template: resolve(__dirname, '..' + config.srcRoot + 'templates/index.pug')
     })
   ]
 }

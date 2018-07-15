@@ -8,16 +8,16 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const config = require('./config')
 
 module.exports = {
-  entry: resolve(__dirname, '../src/main.js'),
+  entry: resolve(__dirname, '..', config.srcRoot, 'main.js'),
   output: {
-    path: resolve(__dirname, '../build'),
+    path: resolve(__dirname, '..', config.distRoot),
     filename: 'scripts/[chunkhash].js',
     hashDigestLength: 8
   },
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve(__dirname, '../src')
+      '@': resolve(__dirname, '..', config.srcRoot)
     },
     extensions: ['.js', '.vue', '.json']
   },
@@ -55,11 +55,18 @@ module.exports = {
       {
         test: /\.styl(us)?$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            }
+          },
           {
             loader: 'css-loader',
             options: {
-              minimize: true
+              minimize: true,
+              modules: true,
+              localIdentName: '[local]-[hash:base64:8]'
             }
           },
           {
@@ -77,7 +84,7 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '[md5:hash:hex:8].[ext]'
+              name: 'images/[md5:hash:hex:8].[ext]'
             }
           }
         ]
@@ -88,7 +95,7 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              name: '[md5:hash:hex:8].[ext]',
+              name: 'images/[md5:hash:hex:8].[ext]',
               limit: 2000
             }
           }
@@ -124,7 +131,7 @@ module.exports = {
       filename: 'stylesheets/[chunkhash].css'
     }),
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, '../src/templates/index.pug'),
+      template: resolve(__dirname, '..' config.srcRoot, 'templates/index.pug'),
       minify: {
         collapseBooleanAttributes: true,
         collapseWhitespace: true,
@@ -134,7 +141,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: resolve(__dirname, '../src/fav.ico')
+        from: resolve(__dirname, '..' + config.srcRoot + 'fav.ico')
       }
     ])
   ]
