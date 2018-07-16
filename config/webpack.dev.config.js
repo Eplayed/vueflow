@@ -8,7 +8,7 @@ module.exports = {
   entry: [
     `webpack-dev-server/client?http://${ config.devServer.host }:${ config.devServer.port }`,
     'webpack/hot/only-dev-server',
-    resolve(__dirname, '..', + config.srcRoot + 'main.js')
+    resolve(__dirname, '..', config.srcRoot, 'main.js')
   ],
   output: {
     filename: '[name].js'
@@ -77,8 +77,7 @@ module.exports = {
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true,
-              plugins: [ autoprefixer ]
+              sourceMap: true
             }
           },
           'stylus-loader'
@@ -114,7 +113,7 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, '..' + config.srcRoot + 'templates/index.pug')
+      template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug')
     })
   ]
 }

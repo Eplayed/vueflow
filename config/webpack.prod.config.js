@@ -79,7 +79,7 @@ module.exports = {
         ],
       },
       {
-        test: /.(png|jpg|gif|svg)$/,
+        test: /.(jpg|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
@@ -131,7 +131,7 @@ module.exports = {
       filename: 'stylesheets/[chunkhash].css'
     }),
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, '..' config.srcRoot, 'templates/index.pug'),
+      template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug'),
       minify: {
         collapseBooleanAttributes: true,
         collapseWhitespace: true,
@@ -141,7 +141,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       {
-        from: resolve(__dirname, '..' + config.srcRoot + 'fav.ico')
+        from: resolve(__dirname, '..', config.srcRoot, 'fav.ico')
       }
     ])
   ]

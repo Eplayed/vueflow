@@ -27,7 +27,5 @@ module.exports = {
   // 免费账号每个月可以压 500 张图
   // https://tinypng.com/developers
   tinifyKeys: [
-    'r6mXyY9HdxBNj3VjHq2kotaDcUKH7eaz',
-    'Tos4aTVslXK2YAgoBn0JA1IZpm2J2ziV'
   ]
 }

@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon -x \"webpack-dev-server --config ./config/webpack.dev.config.js --colors \"",
-    "build": "rimraf ./build && webpack --config ./config/webpack.prod.config.js --progress --colors && node ./scripts/sprites.js"
+    "build": "node scripts/build.js"
   },
   "devDependencies": {
     "autoprefixer": "^8.6.5",
@@ -20,6 +20,8 @@
     "css-loader": "^1.0.0",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
+    "imagemin": "^5.3.1",
+    "imagemin-optipng": "^5.2.1",
     "mini-css-extract-plugin": "^0.4.1",
     "nodemon": "^1.17.5",
     "postcss": "^6.0.23",
@@ -50,5 +52,8 @@
   "bugs": {
     "url": "https://github.com/cntanglijun/vueflow/issues"
   },
-  "homepage": "https://github.com/cntanglijun/vueflow#readme"
+  "homepage": "https://github.com/cntanglijun/vueflow#readme",
+  "dependencies": {
+    "tinify": "^1.6.0-beta.2"
+  }
 }

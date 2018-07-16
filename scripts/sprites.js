@@ -5,12 +5,14 @@ const crypto = require('crypto')
 const postcss = require('postcss')
 const sprites = require('postcss-sprites')
 const glob = require('glob')
+const config = require('../config/config')
 
-const buildRoot = resolve(__dirname, '../build')
+const buildRoot = resolve(__dirname, '..', config.distRoot)
 
 glob(resolve(buildRoot, 'stylesheets/*.css'), {}, (err, files) => {
   files.forEach(file => {
     const css = fs.readFileSync(file, 'utf8')
+
     const spritesOpt = {
       stylesheetPath: resolve(buildRoot, 'stylesheets'),
       spritePath: resolve(buildRoot, 'images'),
@@ -19,7 +21,7 @@ glob(resolve(buildRoot, 'stylesheets/*.css'), {}, (err, files) => {
       hooks: {
         onSaveSpritesheet: (opts, spritesheet) => {
           const sourceImages = Object.keys(spritesheet.coordinates)
-          const filename = crypto.createHash('sha512').digest('base64').slice(0, 8)
+          const filename = (crypto.Hmac('sha256', file).digest('hex')).slice(0, 8)
 
           del(sourceImages)
 

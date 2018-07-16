@@ -2,7 +2,7 @@ const { spawnSync } = require('child_process')
 const webpack = require('webpack')
 const { resolve } = require('path')
 const rimraf = require('rimraf')
-const webpackProdConfig = require('../config/webpack.config.prod')
+const webpackProdConfig = require('../config/webpack.prod.config')
 const config = require('../config/config')
 
 const startDate = new Date()
@@ -25,9 +25,9 @@ webpack(webpackProdConfig, (err, stats) => {
 function afterWebpackBuild() {
 
   // 雪碧图合并
-  if (config.cssSprite) {
-    spawnSync('node', [ resolve(__dirname, '.', 'sprites.js') ], { stdio: 'inherit' })
-  }
+  // if (config.cssSprite) {
+  //   spawnSync('node', [ resolve(__dirname, '.', 'sprites.js') ], { stdio: 'inherit' })
+  // }
 
   if (config.imagemin) {
     spawnSync('node', [ resolve(__dirname, '.', 'imagemin.js') ], { stdio: 'inherit' })
