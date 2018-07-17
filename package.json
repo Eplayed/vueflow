@@ -7,7 +7,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon -x \"webpack-dev-server --config ./config/webpack.dev.config.js --colors \"",
-    "build": "rimraf ./build && webpack --config ./config/webpack.prod.config.js --progress --colors && node ./scripts/sprites.js"
+    "build": "node scripts/build.js"
   },
   "devDependencies": {
     "autoprefixer": "^8.6.5",
