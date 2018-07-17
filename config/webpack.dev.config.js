@@ -85,24 +85,12 @@ module.exports = {
         ],
       },
       {
-        test: /.(jpg|gif|svg)$/,
+        test: /.(png|jpg|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               name: '[sha512:hash:base64:8].[ext]'
-            }
-          }
-        ]
-      },
-      {
-        test: /.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: '[sha512:hash:base64:8].[ext]',
-              limit: 2000
             }
           }
         ]

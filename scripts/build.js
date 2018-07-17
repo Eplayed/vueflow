@@ -29,10 +29,6 @@ function afterWebpackBuild() {
     spawnSync('node', [ resolve(__dirname, '.', 'sprites.js') ], { stdio: 'inherit' })
   }
 
-  if (config.imagemin) {
-    spawnSync('node', [ resolve(__dirname, '.', 'imagemin.js') ], { stdio: 'inherit' })
-  }
-
   // eslint-disable-next-line no-console
   console.log('-----\n构建成功！\n用时：', ((new Date() - startDate) / 1000).toFixed(2) + '秒\n-----\n')
 }

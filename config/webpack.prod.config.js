@@ -1,6 +1,7 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -61,14 +62,7 @@ module.exports = {
               publicPath: '../'
             }
           },
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: true,
-              modules: true,
-              localIdentName: '[local]-[hash:base64:8]'
-            }
-          },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
@@ -88,18 +82,6 @@ module.exports = {
             }
           }
         ]
-      },
-      {
-        test: /.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: 'images/[md5:hash:hex:8].[ext]',
-              limit: 2000
-            }
-          }
-        ]
       }
     ]
   },
@@ -111,7 +93,8 @@ module.exports = {
             comments: false
           }
         }
-      })
+      }),
+      new OptimizeCSSAssetsPlugin()
     ],
     splitChunks: {
       chunks: 'all'
