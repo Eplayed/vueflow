@@ -1,95 +1,38 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const webpackBaseConfig = require('./webpack.base.config')
 const config = require('./config')
 
-module.exports = {
-  entry: [
-    `webpack-dev-server/client?http://${ config.devServer.host }:${ config.devServer.port }`,
-    'webpack/hot/only-dev-server',
-    resolve(__dirname, '..', config.srcRoot, 'main.js')
-  ],
-  output: {
-    filename: '[name].js'
-  },
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve(__dirname, '..', config.srcRoot)
+module.exports = merge(
+  webpackBaseConfig,
+  {
+    output: {
+      filename: '[name].js'
     },
-    extensions: ['.js', '.vue', '.json']
-  },
-  devServer: {
-    hot: true,
-    host: config.devServer.host,
-    port: config.devServer.port,
-    inline: true,
-    compress: true,
-    historyApiFallback: true,
-    contentBase: resolve(__dirname, '..', config.srcRoot)
-  },
-  performance: false,
-  mode: 'development',
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        use: [
-          {
-            loader: 'vue-loader',
-            options: {}
-          }
-        ]
-      },
-      {
-        test: /.pug$/,
-        oneOf: [
-          {
-            resourceQuery: /^\?vue/,
-            use: [ 'pug-plain-loader' ]
-          },
-          {
-            loader: 'pug-loader',
-            options: {
-              pretty: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: [ 'babel-loader' ]
-      },
-      {
-        test: /\.styl(us)?$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'postcss-loader',
-          'stylus-loader'
-        ],
-      },
-      {
-        test: /.(png|jpg|gif|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[sha512:hash:base64:8].[ext]'
-            }
-          }
-        ]
-      }
+
+    devServer: {
+      hot: true,
+      host: config.devServer.host,
+      port: config.devServer.port,
+      inline: true,
+      compress: true,
+      historyApiFallback: true,
+      contentBase: resolve(__dirname, '..', config.srcRoot)
+    },
+
+    // 开发模式禁用性能提示
+    performance: false,
+
+    mode: 'development',
+
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NamedModulesPlugin(),
+      new HtmlWebpackPlugin({
+        template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug')
+      })
     ]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new VueLoaderPlugin(),
-    new HtmlWebpackPlugin({
-      template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug')
-    })
-  ]
-}
+  }
+)
