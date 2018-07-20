@@ -3,6 +3,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const config = require('./config')
+const EslintFriendlyFormatter = require('eslint-friendly-formatter')
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
   entry: [
@@ -82,7 +84,7 @@ module.exports = {
             }
           },
           'stylus-loader'
-        ],
+        ]
       },
       {
         test: /.(jpg|gif|svg)$/,
@@ -106,6 +108,15 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src'), resolve('test')],
+        options: {
+          formatter: EslintFriendlyFormatter
+        }
       }
     ]
   },
