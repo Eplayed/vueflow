@@ -8,7 +8,7 @@ const glob = require('glob')
 
 const buildRoot = resolve(__dirname, '../build')
 
-glob(resolve(buildRoot, 'stylesheets/*.css'), {}, (err, files) => {
+glob(resolve(buildRoot, 'stylesheets/*.css'), {}, (files) => {
   files.forEach(file => {
     const css = fs.readFileSync(file, 'utf8')
     const spritesOpt = {

@@ -2,7 +2,7 @@ const { resolve } = require('path')
 const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const config = require('./config')
@@ -76,7 +76,7 @@ module.exports = {
             }
           },
           'stylus-loader'
-        ],
+        ]
       },
       {
         test: /.(png|jpg|gif|svg)$/,
@@ -117,7 +117,7 @@ module.exports = {
       chunks: 'all'
     },
     runtimeChunk: {
-      name: 'manifest',
+      name: 'manifest'
     }
   },
   plugins: [
@@ -131,7 +131,7 @@ module.exports = {
       filename: 'stylesheets/[chunkhash].css'
     }),
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, '..' config.srcRoot, 'templates/index.pug'),
+      template: resolve(__dirname, '..' + config.srcRoot, 'templates/index.pug'),
       minify: {
         collapseBooleanAttributes: true,
         collapseWhitespace: true,

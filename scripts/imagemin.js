@@ -3,10 +3,10 @@ const fs = require('fs')
 const tinify = require('tinify')
 const imagemin = require('imagemin')
 const glob = require('glob')
-const imageminOptipng = require('imagemin-optipng');
+const imageminOptipng = require('imagemin-optipng')
 const config = require('../config/config')
 
-function validateKeys(keys, callback) {
+function validateKeys (keys, callback) {
   const key = keys.shift()
 
   if (key) {
@@ -18,7 +18,6 @@ function validateKeys(keys, callback) {
       }
 
       if (tinify.compressionCount > 500) {
-
         // 使用下一个 key
         validateKeys(keys)
       } else {
@@ -36,10 +35,8 @@ glob(
   (err, files) => {
     if (!err) {
       files.forEach(file => {
-
         validateKeys(config.tinifyKeys, key => {
           if (key) {
-
             // 有 key 的情况使用 tinify 压缩
             fs.readFile(file, (err, sourceData) => {
               if (err) {
@@ -77,7 +74,6 @@ glob(
             )
               .then(() => {})
               .catch(err => {
-
                 // eslint-disable-next-line no-console
                 console.log(err)
               })

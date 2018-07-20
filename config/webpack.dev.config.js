@@ -8,9 +8,9 @@ const autoprefixer = require('autoprefixer')
 
 module.exports = {
   entry: [
-    `webpack-dev-server/client?http://${ config.devServer.host }:${ config.devServer.port }`,
+    `webpack-dev-server/client?http:// ${config.devServer.host} : ${config.devServer.port}`,
     'webpack/hot/only-dev-server',
-    resolve(__dirname, '..', + config.srcRoot + 'main.js')
+    resolve(__dirname, '..', +config.srcRoot + 'main.js')
   ],
   output: {
     filename: '[name].js'

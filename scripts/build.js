@@ -13,24 +13,21 @@ rimraf.sync(resolve(__dirname, '..', config.distRoot))
 // webpack 打包
 webpack(webpackProdConfig, (err, stats) => {
   if (err || stats.hasErrors()) {
-
     // eslint-disable-next-line no-console
     console.log(err)
   } else {
-
     afterWebpackBuild()
   }
 })
 
-function afterWebpackBuild() {
-
+function afterWebpackBuild () {
   // 雪碧图合并
   if (config.cssSprite) {
-    spawnSync('node', [ resolve(__dirname, '.', 'sprites.js') ], { stdio: 'inherit' })
+    spawnSync('node', [resolve(__dirname, '.', 'sprites.js')], { stdio: 'inherit' })
   }
 
   if (config.imagemin) {
-    spawnSync('node', [ resolve(__dirname, '.', 'imagemin.js') ], { stdio: 'inherit' })
+    spawnSync('node', [resolve(__dirname, '.', 'imagemin.js')], { stdio: 'inherit' })
   }
 
   // eslint-disable-next-line no-console
