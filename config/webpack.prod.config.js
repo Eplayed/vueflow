@@ -1,148 +1,84 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const webpackBaseConfig = require('./webpack.base.config')
 const config = require('./config')
 
-module.exports = {
-  entry: resolve(__dirname, '..', config.srcRoot, 'main.js'),
-  output: {
-    path: resolve(__dirname, '..', config.distRoot),
-    filename: 'scripts/[chunkhash].js',
-    hashDigestLength: 8
-  },
-  resolve: {
-    alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve(__dirname, '..', config.srcRoot)
+module.exports = merge(
+  webpackBaseConfig,
+  {
+    output: {
+      path: resolve(__dirname, '..', config.distRoot),
+      filename: 'scripts/[chunkhash].js',
+      hashDigestLength: 8
     },
-    extensions: ['.js', '.vue', '.json']
-  },
-  mode: 'production',
-  module: {
-    rules: [
-      {
-        test: /\.vue$/,
-        use: [
-          {
-            loader: 'vue-loader',
-            options: {}
-          }
-        ]
-      },
-      {
-        test: /.pug$/,
-        oneOf: [
-          {
-            resourceQuery: /^\?vue/,
-            use: [ 'pug-plain-loader' ]
-          },
-          {
-            loader: 'pug-loader',
-            options: {
-              pretty: true
-            }
-          }
-        ]
-      },
-      {
-        test: /\.js$/,
-        use: [ 'babel-loader' ]
-      },
-      {
-        test: /\.styl(us)?$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              minimize: true,
-              modules: true,
-              localIdentName: '[local]-[hash:base64:8]'
-            }
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true
-            }
-          },
-          'stylus-loader'
-        ],
-      },
-      {
-        test: /.(jpg|gif|svg)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[md5:hash:hex:8].[ext]'
-            }
-          }
-        ]
-      },
-      {
-        test: /.png$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              name: 'images/[md5:hash:hex:8].[ext]',
-              limit: 2000
-            }
-          }
-        ]
-      }
-    ]
-  },
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          output: {
-            comments: false
-          }
+
+    mode: 'production',
+
+    module: {
+      rules: [
+        {
+          test: /\.styl(us)?$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: '../'
+              }
+            },
+            'css-loader',
+            'postcss-loader',
+            'stylus-loader'
+          ],
         }
-      })
-    ],
-    splitChunks: {
-      chunks: 'all'
+      ]
     },
-    runtimeChunk: {
-      name: 'manifest',
-    }
-  },
-  plugins: [
-    new VueLoaderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
+    optimization: {
+      minimizer: [
+        new UglifyJsPlugin({
+          uglifyOptions: {
+            output: {
+              comments: false
+            }
+          }
+        }),
+        new OptimizeCSSAssetsPlugin()
+      ],
+      splitChunks: {
+        chunks: 'all'
+      },
+      runtimeChunk: {
+        name: 'manifest',
       }
-    }),
-    new MiniCssExtractPlugin({
-      filename: 'stylesheets/[chunkhash].css'
-    }),
-    new HtmlWebpackPlugin({
-      template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug'),
-      minify: {
-        collapseBooleanAttributes: true,
-        collapseWhitespace: true,
-        removeComments: true,
-        useShortDoctype: true
-      }
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: resolve(__dirname, '..', config.srcRoot, 'fav.ico')
-      }
-    ])
-  ]
-}
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('production')
+        }
+      }),
+      new MiniCssExtractPlugin({
+        filename: 'stylesheets/[chunkhash].css'
+      }),
+      new HtmlWebpackPlugin({
+        template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug'),
+        minify: {
+          collapseBooleanAttributes: true,
+          collapseWhitespace: true,
+          removeComments: true,
+          useShortDoctype: true
+        }
+      }),
+      new CopyWebpackPlugin([
+        {
+          from: resolve(__dirname, '..', config.srcRoot, 'fav.ico')
+        }
+      ])
+    ]
+  }
+)

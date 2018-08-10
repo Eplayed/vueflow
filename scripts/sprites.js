@@ -9,7 +9,7 @@ const config = require('../config/config')
 
 const buildRoot = resolve(__dirname, '..', config.distRoot)
 
-glob(resolve(buildRoot, 'stylesheets/*.css'), {}, (err, files) => {
+glob(resolve(buildRoot, '**/*.css'), {}, (err, files) => {
   files.forEach(file => {
     const css = fs.readFileSync(file, 'utf8')
 
