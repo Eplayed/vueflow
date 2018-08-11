@@ -17,5 +17,5 @@ module.exports = {
   srcRoot: 'src',
 
   // 是否启用 css 雪碧图
-  cssSprite: false
+  cssSprite: true
 }

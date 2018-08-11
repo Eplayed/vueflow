@@ -8,6 +8,32 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpackBaseConfig = require('./webpack.base.config')
 const config = require('./config')
+const getModuleRules = require('./getModuleRules')
+
+webpackBaseConfig.plugins = webpackBaseConfig.plugins.concat([
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify('production')
+    }
+  }),
+  new MiniCssExtractPlugin({
+    filename: 'stylesheets/[chunkhash].css'
+  }),
+  new HtmlWebpackPlugin({
+    template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug'),
+    minify: {
+      collapseBooleanAttributes: true,
+      collapseWhitespace: true,
+      removeComments: true,
+      useShortDoctype: true
+    }
+  }),
+  new CopyWebpackPlugin([
+    {
+      from: resolve(__dirname, '..', config.srcRoot, 'fav.ico')
+    }
+  ])
+])
 
 module.exports = merge(
   webpackBaseConfig,
@@ -21,22 +47,7 @@ module.exports = merge(
     mode: 'production',
 
     module: {
-      rules: [
-        {
-          test: /\.styl(us)?$/,
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: '../'
-              }
-            },
-            'css-loader',
-            'postcss-loader',
-            'stylus-loader'
-          ],
-        }
-      ]
+      rules: getModuleRules(true)
     },
     optimization: {
       minimizer: [
@@ -55,30 +66,6 @@ module.exports = merge(
       runtimeChunk: {
         name: 'manifest',
       }
-    },
-    plugins: [
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production')
-        }
-      }),
-      new MiniCssExtractPlugin({
-        filename: 'stylesheets/[chunkhash].css'
-      }),
-      new HtmlWebpackPlugin({
-        template: resolve(__dirname, '..', config.srcRoot, 'templates/index.pug'),
-        minify: {
-          collapseBooleanAttributes: true,
-          collapseWhitespace: true,
-          removeComments: true,
-          useShortDoctype: true
-        }
-      }),
-      new CopyWebpackPlugin([
-        {
-          from: resolve(__dirname, '..', config.srcRoot, 'fav.ico')
-        }
-      ])
-    ]
+    }
   }
 )
