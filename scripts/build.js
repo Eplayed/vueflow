@@ -9,10 +9,10 @@ const config = require('../config/config')
 rimraf.sync(resolve(__dirname, '..', config.distRoot))
 
 function queue(funcs) {
-  funcs.shift()(next)
+  funcs.length && funcs.shift()(next)
 
   function next() {
-    funcs.shift()(next)
+    funcs.length && funcs.shift()(next)
   }
 }
 
