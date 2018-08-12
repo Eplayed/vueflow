@@ -51,7 +51,7 @@ function getModuleRules(extract) {
         {
           loader: 'file-loader',
           options: {
-            name: '[sha512:hash:base64:8].[ext]'
+            name: '[sha512:hash:hex:8].[ext]'
           }
         }
       ]

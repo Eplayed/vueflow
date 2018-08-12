@@ -1,8 +1,15 @@
 <template lang="pug">
-h1 About
+.about
+  h1 About
+  a(href="#/") home
 </template>
 
 <style lang="stylus" scoped>
-h1
-  color #666
+.about
+  h1
+    padding-left 50px
+    color #666
+    background-image url('./about.png')
+    background-repeat no-repeat
+    background-size contain
 </style>
