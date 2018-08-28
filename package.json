@@ -1,0 +1,57 @@
+{
+  "name": "vueflow",
+  "description": "a boilerplate base on vue",
+  "version": "1.0.3",
+  "author": "cntanglijun",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "nodemon -x \"webpack-dev-server --config ./config/webpack.dev.config.js --colors \"",
+    "build": "node scripts/build.js"
+  },
+  "devDependencies": {
+    "autoprefixer": "^8.6.5",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "file-loader": "^1.1.11",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.4.1",
+    "nodemon": "^1.17.5",
+    "optimize-css-assets-webpack-plugin": "^5.0.0",
+    "postcss": "^6.0.23",
+    "postcss-loader": "^2.1.6",
+    "postcss-sprites": "^4.2.1",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "tinify": "^1.6.0-beta.2",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "url-loader": "^1.0.1",
+    "vue": "^2.5.16",
+    "vue-loader": "^15.2.4",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.4.4",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cntanglijun/vueflow.git"
+  },
+  "keywords": [
+    "vueflow"
+  ],
+  "bugs": {
+    "url": "https://github.com/cntanglijun/vueflow/issues"
+  },
+  "homepage": "https://github.com/cntanglijun/vueflow#readme"
+}
