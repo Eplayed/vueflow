@@ -1,4 +1,5 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const path = require('path')
 
 function getModuleRules(extract) {
   return [
@@ -16,7 +17,7 @@ function getModuleRules(extract) {
       oneOf: [
         {
           resourceQuery: /^\?vue/,
-          use: [ 'pug-plain-loader' ]
+          use: ['pug-plain-loader']
         },
         {
           loader: 'pug-loader',
@@ -29,7 +30,7 @@ function getModuleRules(extract) {
     {
       test: /\.js$/,
       exclude: /node_modules/,
-      use: [ 'babel-loader' ]
+      use: ['babel-loader']
     },
     {
       test: /\.styl(us)?$/,
@@ -43,6 +44,20 @@ function getModuleRules(extract) {
         'css-loader',
         'postcss-loader',
         'stylus-loader'
+      ],
+    },
+    {
+      test: /\.less$/,
+      use: [
+        !extract ? 'vue-style-loader' : {
+          loader: MiniCssExtractPlugin.loader,
+          options: {
+            publicPath: '../'
+          }
+        },
+        'css-loader',
+        'postcss-loader',
+        'less-loader'
       ],
     },
     {

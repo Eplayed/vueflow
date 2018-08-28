@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const merge = require('webpack-merge')  //优化配置代码的工具
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpackBaseConfig = require('./webpack.base.config')
 const config = require('./config')
